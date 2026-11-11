@@ -1,0 +1,7 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getAdminUser } from "@/lib/auth";
+import { getAllTools } from "@/lib/queries";
+import { AdminShell } from "@/components/admin-shell";
+import { deleteTool } from "@/app/admin/actions";
+export default async function AdminTools(){const user=await getAdminUser();if(!user)redirect("/admin/login");const tools=await getAllTools();return <AdminShell email={user.email||"Admin"}><div className="admin-topbar"><div><h1>Tools</h1><p>Create and manage directory listings and affiliate destinations.</p></div><Link href="/admin/tools/new" className="button button-primary">+ Add tool</Link></div><section className="admin-panel"><div className="table-wrap"><table><thead><tr><th>Tool</th><th>Category</th><th>Pricing</th><th>Status</th><th>Featured</th><th>Actions</th></tr></thead><tbody>{tools.map(t=><tr key={t.id}><td><b>{t.name}</b><br/><span className="muted">/{t.slug}</span></td><td>{t.category_slug}</td><td>{t.pricing}</td><td><span className={t.status==="published"?"status":"status status-draft"}>{t.status}</span></td><td>{t.featured?"Yes":"No"}</td><td><div style={{display:"flex",gap:10}}><Link className="text-link" href={`/admin/tools/${t.id}`}>Edit</Link><form action={deleteTool}><input type="hidden" name="id" value={t.id}/><button className="text-link" style={{color:"#dc2626",border:0,background:"none"}}>Delete</button></form></div></td></tr>)}</tbody></table></div></section></AdminShell>}

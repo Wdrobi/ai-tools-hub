@@ -1,0 +1,5 @@
+import Link from "next/link";
+import { ArrowUpRight, Sparkles } from "lucide-react";
+import type { Tool } from "@/lib/types";
+import { initials } from "@/lib/utils";
+export function ToolCard({ tool }: { tool: Tool }) { return <article className="tool-card"><div className="tool-card-top"><div className="tool-logo">{tool.logo_url ? <img src={tool.logo_url} alt=""/> : <span>{initials(tool.name)}</span>}</div>{tool.featured && <span className="pill pill-featured"><Sparkles size={12}/> Featured</span>}</div><div className="tool-card-body"><p className="eyebrow">{tool.category_slug.replaceAll("-"," ")}</p><h3><Link href={`/tools/${tool.slug}`}>{tool.name}</Link></h3><p className="muted clamp-2">{tool.tagline}</p><div className="tag-row">{tool.tags.slice(0,2).map(tag=><span key={tag} className="tag">{tag}</span>)}</div></div><div className="tool-card-bottom"><span className="muted text-xs">{tool.pricing}</span><Link href={`/tools/${tool.slug}`} className="text-link">View details <ArrowUpRight size={15}/></Link></div></article>; }

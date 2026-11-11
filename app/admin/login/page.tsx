@@ -1,0 +1,5 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
+import { redirect } from "next/navigation";
+import { getAdminUser } from "@/lib/auth";
+import { login } from "@/app/admin/actions";
+export default async function LoginPage({searchParams}:{searchParams:Promise<{error?:string}>}){if(await getAdminUser())redirect("/admin");const {error}=await searchParams;return <main><div className="login-card"><a className="brand" href="/"><span className="brand-mark">✦</span><span>AI Tools <b>Hub</b></span></a><h1>Admin sign in</h1><p>Sign in with an authorized Supabase account to manage tools, categories, and blog content.</p>{error&&<div className="alert">{error}</div>}<form action={login}><div className="field"><label>Email address</label><input name="email" type="email" required placeholder="admin@example.com"/></div><div className="field"><label>Password</label><input name="password" type="password" required placeholder="Your password"/></div><button className="button button-primary">Sign in</button></form><p className="notice">Admin access is restricted by the server-side ADMIN_EMAILS allowlist.</p></div></main>}

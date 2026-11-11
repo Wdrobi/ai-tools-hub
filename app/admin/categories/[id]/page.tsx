@@ -1,0 +1,6 @@
+import { redirect,notFound } from "next/navigation";
+import { getAdminUser } from "@/lib/auth";
+import { getCategories } from "@/lib/queries";
+import { AdminShell } from "@/components/admin-shell";
+import { saveCategory } from "@/app/admin/actions";
+export default async function EditCategory({params}:{params:Promise<{id:string}>}){const user=await getAdminUser();if(!user)redirect("/admin/login");const {id}=await params;const c=(await getCategories()).find(x=>x.id===id);if(!c)notFound();return <AdminShell email={user.email||"Admin"}><div className="admin-topbar"><div><h1>Edit category</h1><p>Update category details.</p></div></div><section className="admin-panel"><form action={saveCategory} className="admin-form"><input type="hidden" name="id" value={c.id}/><div className="field"><label>Name</label><input name="name" defaultValue={c.name} required/></div><div className="field"><label>Slug</label><input name="slug" defaultValue={c.slug} required pattern="[a-z0-9-]+"/></div><div className="field"><label>Icon name</label><input name="icon" defaultValue={c.icon} required/></div><div className="field"><label>Description</label><input name="description" defaultValue={c.description} required/></div><div className="form-actions"><button className="button button-primary">Update category</button></div></form></section></AdminShell>}

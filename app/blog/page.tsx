@@ -1,0 +1,3 @@
+import Link from "next/link";
+import { getPosts } from "@/lib/queries";
+export default async function BlogPage(){const posts=await getPosts();return <main className="container"><div className="page-hero"><p className="eyebrow">Learn & compare</p><h1>AI tools guides and reviews</h1><p>Practical articles to help you evaluate AI software and choose tools for your workflow.</p></div><div className="content-wrap">{posts.length?<div className="tool-grid">{posts.map(p=><article className="blog-card" key={p.id}><p className="eyebrow">Guide & review</p><h2>{p.title}</h2><p>{p.excerpt}</p><Link href={`/blog/${p.slug}`} className="text-link">Read article →</Link></article>)}</div>:<div className="empty-state">New guides and reviews are coming soon.</div>}</div></main>}
