@@ -3,6 +3,7 @@ import type { ElementType } from "react";
 import { ArrowRight, ArrowUpRight, Bot, Code2, Image as ImageIcon, Search, ShieldCheck, Sparkles, Video, Zap, Mic2, PenLine, Globe, Megaphone, Workflow, GraduationCap, Presentation, ChartNoAxesCombined, UserRound } from "lucide-react";
 import { getCategories, getTools } from "@/lib/queries";
 import { ToolCard } from "@/components/tool-card";
+export const revalidate = 60;
 const iconMap: Record<string,ElementType> = {"pen-line":PenLine,image:ImageIcon,video:Video,"audio-lines":Mic2,bot:Bot,code:Code2,megaphone:Megaphone,workflow:Workflow,globe:Globe,"graduation-cap":GraduationCap,presentation:Presentation,"chart-no-axes-combined":ChartNoAxesCombined,"user-round":UserRound,layers:Sparkles};
 export default async function HomePage() {
   const [tools,categories]=await Promise.all([getTools(),getCategories()]);
