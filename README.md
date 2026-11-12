@@ -48,10 +48,10 @@ Open http://localhost:3000. Without Supabase, the public pages use demo records.
 ## 4. Add and manage affiliate tools
 
 1. Sign in at `/admin/login` using the allowlisted Supabase admin account.
-2. Add a tool using its official URL.
-3. Add an affiliate URL only after the vendor approves your affiliate account and provides a tracking link.
-4. Keep `status` as `draft` until the listing is reviewed.
-5. Publish when the description, product status, pricing notes, and links are verified.
+2. Add the approved HTTPS affiliate URL supplied by the vendor or affiliate network.
+3. Add a local `/logos/...` asset or an approved HTTPS logo URL; listings require a visible logo.
+4. The official product URL is optional. When it is omitted, the affiliate URL is also stored as the safe database fallback.
+5. Keep `status` as `draft` until the listing is reviewed, then publish after the description, pricing notes, logo, and destination are verified.
 
 The `/go/[slug]` endpoint sends visitors to the approved affiliate URL when present; otherwise it sends them to the official product URL. Clicks are recorded server-side when Supabase is configured.
 

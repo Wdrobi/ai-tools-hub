@@ -17,8 +17,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     } catch {}
   }
 
-  if (!websiteUrl) return NextResponse.redirect(siteUrl("/tools"), 302);
   const destination = affiliateUrl || websiteUrl;
+  if (!destination) return NextResponse.redirect(siteUrl("/tools"), 302);
   // Never redirect to non-HTTPS or malformed destinations, even if a bad value enters the DB.
   try { if (new URL(destination).protocol !== "https:") return NextResponse.redirect(siteUrl("/tools"), 302); }
   catch { return NextResponse.redirect(siteUrl("/tools"), 302); }

@@ -45,6 +45,12 @@ select optgroup {
   margin-top: 12px;
 }
 
+.field-help {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
 .cta-section {
   padding-top: 15px;
 }
