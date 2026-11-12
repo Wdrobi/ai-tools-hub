@@ -3,6 +3,7 @@ import { getAdminUser } from "@/lib/auth";
 import { getAllTools,getCategories } from "@/lib/queries";
 import { AdminShell } from "@/components/admin-shell";
 import { saveTool } from "@/app/admin/actions";
+import { PricingPlanEditor } from "@/components/pricing-plan-editor";
 export default async function EditTool({params}:{params:Promise<{id:string}>}){
   const user=await getAdminUser();
   if(!user)redirect("/admin/login");
@@ -23,7 +24,8 @@ export default async function EditTool({params}:{params:Promise<{id:string}>}){
       <div className="field"><label>Logo path or HTTPS URL *</label><input name="logo_url" type="text" defaultValue={t.logo_url||""} required placeholder="/logos/tool-slug.png"/><span className="field-help">Use a local file in public/logos or an approved HTTPS image.</span></div>
       <div className="field"><label>Category *</label><select name="category_slug" defaultValue={t.category_slug}>{cats.map(c=><option key={c.id} value={c.slug}>{c.name}</option>)}</select></div>
       <div className="field"><label>Tags</label><input name="tags" defaultValue={t.tags.join(", ")}/></div>
-      <div className="field"><label>Pricing</label><input name="pricing" defaultValue={t.pricing}/></div>
+      <div className="field"><label>Pricing summary *</label><input name="pricing" defaultValue={t.pricing} required/><span className="field-help">This short text appears on directory cards.</span></div>
+      <PricingPlanEditor defaultPlans={t.pricing_plans||[]} defaultDiscountCode={t.discount_code||""} defaultDiscountNote={t.discount_note||""}/>
       <div className="field"><label>Status</label><select name="status" defaultValue={t.status}><option value="draft">Draft</option><option value="published">Published</option></select></div>
       <div className="field"><label><input type="checkbox" name="featured" defaultChecked={t.featured} style={{width:"auto",marginRight:8}}/>Featured tool</label></div>
       <div className="form-actions"><button className="button button-primary">Update tool</button></div>

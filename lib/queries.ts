@@ -1,12 +1,13 @@
 import { demoTools, categories } from "@/lib/data";
 import { hasSupabase, getAdminDb } from "@/lib/supabase";
 import type { Tool, Category, BlogPost } from "@/lib/types";
+import { normalizeToolPricing } from "@/lib/pricing";
 export async function getTools(): Promise<Tool[]> {
-  if (hasSupabase) { try { const { data, error } = await getAdminDb().from("tools").select("*").eq("status","published").order("created_at",{ascending:false}); if (!error && data) return data as Tool[]; } catch {} }
+  if (hasSupabase) { try { const { data, error } = await getAdminDb().from("tools").select("*").eq("status","published").order("created_at",{ascending:false}); if (!error && data) return (data as Tool[]).map(normalizeToolPricing); } catch {} }
   return demoTools;
 }
 export async function getAllTools(): Promise<Tool[]> {
-  if (hasSupabase) { const { data, error } = await getAdminDb().from("tools").select("*").order("created_at",{ascending:false}); if (!error && data) return data as Tool[]; }
+  if (hasSupabase) { const { data, error } = await getAdminDb().from("tools").select("*").order("created_at",{ascending:false}); if (!error && data) return (data as Tool[]).map(normalizeToolPricing); }
   return demoTools;
 }
 export async function getCategories(): Promise<Category[]> {

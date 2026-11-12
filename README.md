@@ -10,6 +10,7 @@ A Vercel-ready AI software directory and affiliate discovery platform built with
 - Click event tracking (Supabase)
 - Admin login using Supabase Auth + server-side email allowlist
 - Admin CRUD for tools, categories, and blog posts
+- Multi-package pricing with original/current prices, billing periods, feature lists, popular-plan labels, and optional discount codes
 - SEO metadata, sitemap, robots, and affiliate disclosure
 - Demo data fallback so the public site can be previewed without Supabase
 
@@ -52,6 +53,9 @@ Open http://localhost:3000. Without Supabase, the public pages use demo records.
 3. Add a local `/logos/...` asset or an approved HTTPS logo URL; listings require a visible logo.
 4. The official product URL is optional. When it is omitted, the affiliate URL is also stored as the safe database fallback.
 5. Keep `status` as `draft` until the listing is reviewed, then publish after the description, pricing notes, logo, and destination are verified.
+6. Add every available pricing package separately. Use the short pricing summary for directory cards, then enter each package name, current price, optional original price, billing period, included features, and any active discount code.
+
+For an existing Supabase project, run `supabase/migrations/20261112_multi_plan_pricing.sql` in the Supabase SQL Editor. The app includes a backward-compatible storage fallback, so admin saves and public pricing cards continue to work before the migration is applied.
 
 The `/go/[slug]` endpoint sends visitors to the approved affiliate URL when present; otherwise it sends them to the official product URL. Clicks are recorded server-side when Supabase is configured.
 

@@ -23,11 +23,19 @@ create table if not exists public.tools (
   category_slug text not null references public.categories(slug) on update cascade on delete restrict,
   tags text[] not null default '{}',
   pricing text not null default 'Check vendor',
+  pricing_plans jsonb not null default '[]'::jsonb,
+  discount_code text,
+  discount_note text,
   featured boolean not null default false,
   status text not null default 'draft' check (status in ('published','draft')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Safe to run on projects created from an earlier version of this schema.
+alter table public.tools add column if not exists pricing_plans jsonb not null default '[]'::jsonb;
+alter table public.tools add column if not exists discount_code text;
+alter table public.tools add column if not exists discount_note text;
 
 create table if not exists public.posts (
   id uuid primary key default gen_random_uuid(),
